@@ -35,6 +35,10 @@ internal class PrepareSingleCommand {
         using var prizeFileReader = File.OpenText(this.InputFileName);
         var prizes = await PrizeCollection.Read(prizeFileReader, this.CsvSeparator, this.CsvComment);
         Console.WriteLine($"Read {prizes.Count} prizes in {prizes.PrizeCount} instances.");
+        if(prizes.Count ==0) {
+            Console.WriteLine("Error: No prizes defined.");
+            return 1;
+        }
 
         // Generate ticket data
         Console.Write("Generating tickets");
