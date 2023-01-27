@@ -1,0 +1,41 @@
+{
+  "BaseImage": "ticket-multi.png",
+  "SerialNumberPosition": {
+    "X": 83,
+    "Y": 83
+  },
+  "SerialNumberStyle": {
+    "Color": "#ffffff",
+    "Font": "Consolas",
+    "Size": 32,
+    "Bold": true,
+    "Italic": false
+  },
+  "FieldStyle": {
+    "Color": "#000000",
+    "Font": "Arial",
+    "Size": 60,
+    "Bold": false,
+    "Italic": false
+  },
+  "Fields": [
+    {
+      "X": 201,
+      "Y": 791,
+      "Width": 165,
+      "Height": 165
+    },
+    {
+      "X": 537,
+      "Y": 791,
+      "Width": 165,
+      "Height": 165
+    },
+    {
+      "X": 872,
+      "Y": 791,
+      "Width": 165,
+      "Height": 165
+    }
+  ]
+}

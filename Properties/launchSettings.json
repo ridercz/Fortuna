@@ -7,6 +7,14 @@
     "prepare-multi": {
       "commandName": "Project",
       "commandLineArgs": "prepare multi prizes-multi.csv tickets-multi.json 20 --csv-separator ; --fields 3 --fields-to-win 2 -sp M1-"
+    },
+    "generate-single": {
+      "commandName": "Project",
+      "commandLineArgs": "generate tickets-single.json layout-single.json .\\images-single"
+    },
+    "generate-multi": {
+      "commandName": "Project",
+      "commandLineArgs": "generate tickets-multi.json layout-multi.json .\\images-multi"
     }
 
   }

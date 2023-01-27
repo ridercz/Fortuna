@@ -28,13 +28,3 @@ public class PrepareCommand {
     }
 
 }
-
-[Command("generate", Description = "Generate PDF file with tickets.")]
-public class GenerateCommand {
-
-    public int OnExecute(CommandLineApplication app) {
-        app.ShowHelp();
-        return 0;
-    }
-
-}

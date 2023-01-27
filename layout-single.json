@@ -1,0 +1,29 @@
+{
+  "BaseImage": "ticket-single.png",
+  "SerialNumberPosition": {
+    "X": 83,
+    "Y": 83
+  },
+  "SerialNumberStyle": {
+    "Color": "#ffffff",
+    "Font": "Consolas",
+    "Size": 24,
+    "Bold": true,
+    "Italic": false
+  },
+  "FieldStyle": {
+    "Color": "#000000",
+    "Font": "Arial",
+    "Size": 60,
+    "Bold": false,
+    "Italic": false
+  },
+  "Fields": [
+    {
+      "X": 224,
+      "Y": 525,
+      "Width": 425,
+      "Height": 189
+    }
+  ]
+}
