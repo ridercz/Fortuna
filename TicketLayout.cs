@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Fortuna;
+﻿namespace Fortuna;
 
 internal class TicketLayout {
 
