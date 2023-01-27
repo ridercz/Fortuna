@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Fortuna;
+using GenCode128;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -73,27 +74,39 @@ public class GenerateCommand {
             using var image = await Image.LoadAsync(layout.BaseImage);
 
             // Add serial number
-            image.Mutate(x => x.DrawText(ticket.SerialNumber, snFont, snColor, new PointF(layout.SerialNumberPosition.X, layout.SerialNumberPosition.Y)));
+            var snRectangle = new Rectangle(layout.SerialNumberPosition.X, layout.SerialNumberPosition.Y, layout.SerialNumberPosition.Width, layout.SerialNumberPosition.Height);
+            var snTextOptions = new TextOptions(snFont) {
+                Origin = new Point(snRectangle.X + snRectangle.Width / 2, snRectangle.Y + snRectangle.Height / 2),
+                TextAlignment = TextAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
+            image.Mutate(x => x.DrawText(snTextOptions, ticket.SerialNumber, snColor));
+
+            // Add SN barcode
+            var bcImage = Code128Rendering.MakeBarcodeImage(ticket.SerialNumber, 10, true);
+            bcImage.Mutate(x => x.Resize(layout.BarcodePosition.Width, layout.BarcodePosition.Height));
+            image.Mutate(x => x.DrawImage(bcImage, new Point(layout.BarcodePosition.X, layout.BarcodePosition.Y), 1));
 
             // Add fields
             for (var i = 0; i < ticket.Fields.Length; i++) {
-                var rect = new Rectangle(layout.Fields[i].X, layout.Fields[i].Y, layout.Fields[i].Width, layout.Fields[i].Height);
+                var fieldRectangle = new Rectangle(layout.Fields[i].X, layout.Fields[i].Y, layout.Fields[i].Width, layout.Fields[i].Height);
                 var fontSize = layout.FieldStyle.Size;
 
                 while (true) {
                     // Create font of appropriate size
                     var font = fFontFamily.CreateFont(fontSize, FontStyle.Bold);
                     var options = new TextOptions(font) {
-                        Origin = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2),
+                        Origin = new Point(fieldRectangle.Left + fieldRectangle.Width / 2, fieldRectangle.Top + fieldRectangle.Height / 2),
                         TextAlignment = TextAlignment.Center,
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        WrappingLength = rect.Width
+                        WrappingLength = fieldRectangle.Width
                     };
 
                     // Check if font fits into the box
                     var fr = TextMeasurer.Measure(ticket.Fields[i], options);
-                    if (fr.Width > rect.Width || fr.Height > rect.Height) {
+                    if (fr.Width > fieldRectangle.Width || fr.Height > fieldRectangle.Height) {
                         // It doesn't, try smaller size
                         fontSize -= 2;
                         continue;

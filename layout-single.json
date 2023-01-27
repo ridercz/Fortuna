@@ -1,8 +1,16 @@
 {
   "BaseImage": "ticket-single.png",
+  "BarcodePosition": {
+    "X": 200,
+    "Y": 1050,
+    "Width": 473,
+    "Height": 100
+  },
   "SerialNumberPosition": {
-    "X": 83,
-    "Y": 83
+    "X": 200,
+    "Y": 1150,
+    "Width": 473,
+    "Height": 40
   },
   "SerialNumberStyle": {
     "Color": "#ffffff",
