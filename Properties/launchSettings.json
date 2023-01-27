@@ -2,11 +2,11 @@
   "profiles": {
     "prepare-single": {
       "commandName": "Project",
-      "commandLineArgs": "prepare single prizes-single.csv tickets-single.json --csv-separator ;"
+      "commandLineArgs": "prepare single prizes-single.csv tickets-single.json --csv-separator ; -sp S1-"
     },
     "prepare-multi": {
       "commandName": "Project",
-      "commandLineArgs": "prepare multi prizes-multi.csv tickets-multi.json 20 --csv-separator ; --fields 3 --fields-to-win 2"
+      "commandLineArgs": "prepare multi prizes-multi.csv tickets-multi.json 20 --csv-separator ; --fields 3 --fields-to-win 2 -sp M1-"
     }
 
   }

@@ -13,34 +13,40 @@ internal class PrepareMultiCommand {
     private PrizeCollection? prizes;
 
     [Argument(0, "input-file", "Name of CSV file containing list of prizes.")]
+    [Required]
     public required string InputFileName { get; set; }
 
     [Argument(1, "output-file", "Name of JSON file to generate.")]
+    [Required]
     public required string OutputFileName { get; set; }
 
     [Argument(2, "ticket-count", "Number of tickets to generate.")]
+    [Required]
     public int TicketCount { get; set; }
 
-    [Option("--fields <number>", Description = "Number of fields to generate.")]
+    [Option("--fields <number>", ShortName = "fn", Description = "Number of fields to generate.")]
     [Range(3, 50)]
     public int Fields { get; set; } = 3;
 
-    [Option("--fields-to-win <number>", Description = "Number of fields with same content required to win.")]
+    [Option("--fields-to-win <number>", ShortName = "fw", Description = "Number of fields with same content required to win.")]
     [Range(2, 50)]
     public int FieldsToWin { get; set; } = 3;
 
-    [Option("--csv-separator <string>", Description = "Character sequence used for CSV field separator, ie `,` or `TAB`.")]
+    [Option("--csv-separator <string>", ShortName = "cs", Description = "Character sequence used for CSV field separator, ie `,` or `TAB`.")]
     public string CsvSeparator { get; set; } = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-    [Option("--csv-comment <string>", Description = "Character sequence used as CSV comment line indicator.")]
+    [Option("--csv-comment <string>", ShortName = "cc", Description = "Character sequence used as CSV comment line indicator.")]
     public string CsvComment { get; set; } = "#";
 
-    [Option("--serial-length <length>", Description = "Length of randomly generated serial numbers.")]
+    [Option("--serial-length <length>", ShortName = "sl", Description = "Length of randomly generated serial numbers.")]
     [Range(5, 20)]
     public int SerialNumberLength { get; set; } = 10;
 
-    [Option("--serial-characters <string>", Description = "Characters permitted in randomly generated serial number.")]
+    [Option("--serial-characters <string>", ShortName = "sc", Description = "Characters permitted in randomly generated serial number.")]
     public string SerialNumberCharacters { get; set; } = "0123456789ABCDEFGHKLMNPSTUWXYZ";
+
+    [Option("--serial-number-prefix <string>", ShortName = "sp", Description = "Prefix for all serial numbers (ie. batch number)")]
+    public string SerialNumberPrefix { get; set; } = string.Empty;
 
     public async Task<int> OnExecuteAsync(CommandLineApplication app) {
         if (this.FieldsToWin > this.Fields) {
@@ -66,13 +72,11 @@ internal class PrepareMultiCommand {
         // Generate winning ticket data
         Console.Write("Generating winning tickets");
         var ticketData = new TicketData() {
-            Strategy = "multiple",
-            BatchId = Guid.NewGuid(),
             DateCreated = DateTime.Now
         };
         foreach (var prize in this.prizes) {
             for (var i = 0; i < prize.Count; i++) {
-                var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters);
+                var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters, this.SerialNumberPrefix);
                 var fields = new Collection<FieldInfo>();
 
                 for (var j = 0; j < this.FieldsToWin; j++) {
@@ -90,7 +94,7 @@ internal class PrepareMultiCommand {
         // Generate non-winning ticket data
         Console.Write("Generate non-winning tickets");
         while (ticketData.Tickets.Count < this.TicketCount) {
-            var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters);
+            var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters, this.SerialNumberPrefix);
             var fields = this.CompleteFields(new Collection<FieldInfo>()).ToArray();
             ticketData.Tickets.Add(new(serialNumber, null, fields));
             Console.Write('.');

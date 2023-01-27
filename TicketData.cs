@@ -4,28 +4,34 @@ namespace Fortuna;
 
 internal class TicketData {
 
+    // Properties
+
     public int Version { get; set; } = 1;
-
-    public required string Strategy { get; set; }
-
-    public required Guid BatchId { get; set; }
 
     public required DateTimeOffset DateCreated { get; set; }
 
-    public ICollection<TicketInfo> Tickets { get; set; }= new HashSet<TicketInfo>();
+    public ICollection<TicketInfo> Tickets { get; set; } = new HashSet<TicketInfo>();
 
-    public string GenerateUniqueSerialNumber(int length, string chars) {
+    // Methods
+
+    public string GenerateUniqueSerialNumber(int length, string chars, string prefix = "") {
         var snChars = new char[length];
         while (true) {
             // Generate random serial number
             for (var i = 0; i < length; i++) {
                 snChars[i] = chars[RandomNumberGenerator.GetInt32(chars.Length)];
             }
-            var snString = new string(snChars);
+            var snString = prefix + new string(snChars);
 
             // Check if it's unique
             if (!this.Tickets.Any(x => x.SerialNumber.Equals(snString, StringComparison.OrdinalIgnoreCase))) return snString;
         }
+    }
+
+    public bool Validate() {
+        if (!this.Tickets.Any()) return false;
+        var firstFieldCount = this.Tickets.First().Fields.Length;
+        return this.Tickets.All(x => x.Fields.Length == firstFieldCount);
     }
 
 }
