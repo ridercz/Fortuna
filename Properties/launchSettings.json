@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "prepare-single": {
+      "commandName": "Project",
+      "commandLineArgs": "prepare single prizes-single.csv tickets-single.json --csv-separator ;"
+    }
+  }
+}
