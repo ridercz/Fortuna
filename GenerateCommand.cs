@@ -21,6 +21,9 @@ public class GenerateCommand {
     [Argument(2, "output-folder", "Folder where generated output images are to be stored.")]
     public required string OutputFolder { get; set; }
 
+    [Option("--dpi <number>", Description = "Set the DPI resolution of the generated images.")]
+    public int Dpi { get; set; } = 300;
+
     public async Task<int> OnExecuteAsync(CommandLineApplication app) {
         Console.Write("Reading ticket data...");
         TicketData data;
@@ -71,6 +74,11 @@ public class GenerateCommand {
 
             // Load base image
             using var image = await Image.LoadAsync(layout.BaseImage);
+
+            // Set DPI
+            image.Metadata.ResolutionUnits = SixLabors.ImageSharp.Metadata.PixelResolutionUnit.PixelsPerInch;
+            image.Metadata.VerticalResolution = this.Dpi;
+            image.Metadata.HorizontalResolution = this.Dpi;
 
             // Add serial number
             var snRectangle = new Rectangle(layout.SerialNumberPosition.X, layout.SerialNumberPosition.Y, layout.SerialNumberPosition.Width, layout.SerialNumberPosition.Height);
