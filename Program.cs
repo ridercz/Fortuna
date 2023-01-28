@@ -8,7 +8,7 @@ Console.WriteLine();
 await CommandLineApplication.ExecuteAsync<RootCommand>(args);
 
 [Command]
-[Subcommand(typeof(PrepareCommand), typeof(GenerateCommand))]
+[Subcommand(typeof(PrepareCommand), typeof(GenerateCommand), typeof(MergeCommand))]
 public class RootCommand {
 
     public int OnExecute(CommandLineApplication app) {

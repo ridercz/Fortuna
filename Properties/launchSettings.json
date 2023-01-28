@@ -15,7 +15,14 @@
     "generate-multi": {
       "commandName": "Project",
       "commandLineArgs": "generate tickets-multi.json layout-multi.json .\\images-multi"
+    },
+    "merge-single": {
+      "commandName": "Project",
+      "commandLineArgs": "merge .\\images-single .\\merged-single 4 2"
+    },
+    "merge-multi": {
+      "commandName": "Project",
+      "commandLineArgs": "merge .\\images-multi .\\merged-multi 2 2"
     }
-
   }
 }
