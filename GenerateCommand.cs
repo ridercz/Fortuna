@@ -134,7 +134,6 @@ public class GenerateCommand {
         return 0;
     }
 
-
     private static Color GetColorFromHtmlString(string s) {
         s = s.Trim().ToLowerInvariant();
         if (string.IsNullOrWhiteSpace(s)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(s));
