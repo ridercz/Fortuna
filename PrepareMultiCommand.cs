@@ -21,7 +21,7 @@ internal class PrepareMultiCommand {
     public required string OutputFileName { get; set; }
 
     [Argument(2, "ticket-count", "Number of tickets to generate.")]
-    [Required]
+    [Required, Range(1, int.MaxValue)]
     public int TicketCount { get; set; }
 
     [Option("--fields <number>", ShortName = "fn", Description = "Number of fields to generate.")]
