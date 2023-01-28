@@ -1,8 +1,5 @@
-﻿# Comment
-První cena s hodně dlouhým názvem;1
-invalid
-Druhá cena;2
-;invalid
-Třetí cena;3
-invalid;0
-Je nám líto, nic nevyhráváš;9
+﻿# Name;Count
+First price with a pretty long name;1
+Second price;2
+Third price;3
+Sorry, bad luck.\nTry again!;10
