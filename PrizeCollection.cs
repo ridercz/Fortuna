@@ -20,7 +20,9 @@ internal class PrizeCollection : Collection<PrizeInfo> {
                 Console.WriteLine($"  Ignoring line {lineNumber}: Syntax error");
                 continue;
             }
-            result.Add(new(data[0], count));
+
+            var name = data[0].Replace("\\n", "\n");
+            result.Add(new(name, count));
         }
         return result;
     }
