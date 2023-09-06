@@ -1,4 +1,4 @@
-﻿namespace Fortuna;
+﻿namespace Fortuna.Data;
 
 internal class TicketLayout {
 

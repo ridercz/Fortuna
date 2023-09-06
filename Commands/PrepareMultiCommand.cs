@@ -5,8 +5,9 @@ using System.Security.Cryptography;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using Fortuna.Data;
 
-namespace Fortuna;
+namespace Fortuna.Commands;
 
 [Command("multi", "Prepare multi-field tickets.")]
 internal class PrepareMultiCommand {
@@ -74,21 +75,17 @@ internal class PrepareMultiCommand {
         var ticketData = new TicketData() {
             DateCreated = DateTime.Now
         };
-        foreach (var prize in this.prizes) {
-            for (var i = 0; i < prize.Count; i++) {
+        foreach (var prize in this.prizes)             for (var i = 0; i < prize.Count; i++) {
                 var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters, this.SerialNumberPrefix);
                 var fields = new Collection<FieldInfo>();
 
-                for (var j = 0; j < this.FieldsToWin; j++) {
-                    fields.Add(new(RandomNumberGenerator.GetInt32(int.MaxValue), prize.Name));
-                }
+                for (var j = 0; j < this.FieldsToWin; j++)                     fields.Add(new(RandomNumberGenerator.GetInt32(int.MaxValue), prize.Name));
 
                 var fieldStrings = this.CompleteFields(fields, prize.Name).ToArray();
                 ticketData.Tickets.Add(new(serialNumber, prize.Name, fieldStrings));
 
                 Console.Write('.');
             }
-        }
         Console.WriteLine("OK");
 
         // Generate non-winning ticket data
@@ -124,7 +121,7 @@ internal class PrepareMultiCommand {
             if (newField.Value.Equals(designatedPrice)) continue;
             fields.Add(newField);
             var winningPrizes = fields.GroupBy(x => x.Value).Where(x => x.Count() >= this.FieldsToWin);
-            if ((designatedPrice == null && winningPrizes.Any()) || (designatedPrice != null && winningPrizes.Count() > 1)) fields.Remove(newField);
+            if (designatedPrice == null && winningPrizes.Any() || designatedPrice != null && winningPrizes.Count() > 1) fields.Remove(newField);
         }
 
         return fields.OrderBy(x => x.Order).Select(x => x.Value);

@@ -3,8 +3,9 @@ using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using Fortuna.Data;
 
-namespace Fortuna;
+namespace Fortuna.Commands;
 
 [Command("single", "Prepare single-field tickets.")]
 internal class PrepareSingleCommand {
@@ -49,13 +50,11 @@ internal class PrepareSingleCommand {
         var ticketData = new TicketData() {
             DateCreated = DateTime.Now
         };
-        foreach (var prize in prizes) {
-            for (var i = 0; i < prize.Count; i++) {
+        foreach (var prize in prizes)             for (var i = 0; i < prize.Count; i++) {
                 var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters, this.SerialNumberPrefix);
                 ticketData.Tickets.Add(new(serialNumber, prize.Name, prize.Name));
                 Console.Write(".");
             }
-        }
         Console.WriteLine("OK");
 
         // Sort tickets

@@ -1,11 +1,13 @@
 ﻿using System.Text.Json;
 using System.Text.RegularExpressions;
-using Fortuna;
+using Fortuna.Data;
 using GenCode128;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Processing;
+
+namespace Fortuna.Commands;
 
 [Command("generate", Description = "Generate image files with tickets.")]
 public class GenerateCommand {

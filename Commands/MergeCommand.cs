@@ -3,7 +3,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace Fortuna;
+namespace Fortuna.Commands;
 
 [Command("merge", "Merge multiple images into single file")]
 internal class MergeCommand {
@@ -50,13 +50,12 @@ internal class MergeCommand {
 
         Console.WriteLine("Processing images...");
         var i = 0;
-        for (int p = 0; p < pageCount; p++) {
+        for (var p = 0; p < pageCount; p++) {
             using var pageImage = new Image<Rgb24>(pageImageWidth, pageImageHeight, Color.White);
             pageImage.Metadata.ResolutionUnits = SixLabors.ImageSharp.Metadata.PixelResolutionUnit.PixelsPerInch;
             pageImage.Metadata.VerticalResolution = this.Dpi;
             pageImage.Metadata.HorizontalResolution = this.Dpi;
-            for (int r = 0; r < this.Rows; r++) {
-                for (int c = 0; c < this.Columns; c++) {
+            for (var r = 0; r < this.Rows; r++)                 for (var c = 0; c < this.Columns; c++) {
                     Console.Write($"  #{i,4} [{p,3},{c,3},{r,3}] ");
                     if (i >= sfi.Length) {
                         Console.WriteLine("skipped");
@@ -69,7 +68,6 @@ internal class MergeCommand {
                     pageImage.Mutate(x => x.DrawImage(img, new Point(c * testImage.Width, r * testImage.Height), 1));
                     i++;
                 }
-            }
             var pageFileName = Path.Combine(this.TargetFolder, $"page-{p:0000}{sfi[0].Extension}");
             Console.Write($"Saving {pageFileName}...");
             pageImage.Save(pageFileName);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Fortuna;
+namespace Fortuna.Data;
 
 internal class PrizeCollection : Collection<PrizeInfo> {
 

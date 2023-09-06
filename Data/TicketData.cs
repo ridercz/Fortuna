@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Fortuna;
+namespace Fortuna.Data;
 
 internal class TicketData {
 
@@ -18,9 +18,7 @@ internal class TicketData {
         var snChars = new char[length];
         while (true) {
             // Generate random serial number
-            for (var i = 0; i < length; i++) {
-                snChars[i] = chars[RandomNumberGenerator.GetInt32(chars.Length)];
-            }
+            for (var i = 0; i < length; i++)                 snChars[i] = chars[RandomNumberGenerator.GetInt32(chars.Length)];
             var snString = prefix + new string(snChars);
 
             // Check if it's unique
