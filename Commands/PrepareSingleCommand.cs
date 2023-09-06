@@ -50,11 +50,13 @@ internal class PrepareSingleCommand {
         var ticketData = new TicketData() {
             DateCreated = DateTime.Now
         };
-        foreach (var prize in prizes)             for (var i = 0; i < prize.Count; i++) {
+        foreach (var prize in prizes) {
+            for (var i = 0; i < prize.Count; i++) {
                 var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters, this.SerialNumberPrefix);
                 ticketData.Tickets.Add(new(serialNumber, prize.Name, prize.Name));
                 Console.Write(".");
             }
+        }
         Console.WriteLine("OK");
 
         // Sort tickets

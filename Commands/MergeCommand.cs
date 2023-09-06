@@ -55,7 +55,8 @@ internal class MergeCommand {
             pageImage.Metadata.ResolutionUnits = SixLabors.ImageSharp.Metadata.PixelResolutionUnit.PixelsPerInch;
             pageImage.Metadata.VerticalResolution = this.Dpi;
             pageImage.Metadata.HorizontalResolution = this.Dpi;
-            for (var r = 0; r < this.Rows; r++)                 for (var c = 0; c < this.Columns; c++) {
+            for (var r = 0; r < this.Rows; r++) {
+                for (var c = 0; c < this.Columns; c++) {
                     Console.Write($"  #{i,4} [{p,3},{c,3},{r,3}] ");
                     if (i >= sfi.Length) {
                         Console.WriteLine("skipped");
@@ -68,6 +69,7 @@ internal class MergeCommand {
                     pageImage.Mutate(x => x.DrawImage(img, new Point(c * testImage.Width, r * testImage.Height), 1));
                     i++;
                 }
+            }
             var pageFileName = Path.Combine(this.TargetFolder, $"page-{p:0000}{sfi[0].Extension}");
             Console.Write($"Saving {pageFileName}...");
             pageImage.Save(pageFileName);

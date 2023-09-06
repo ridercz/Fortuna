@@ -75,17 +75,19 @@ internal class PrepareMultiCommand {
         var ticketData = new TicketData() {
             DateCreated = DateTime.Now
         };
-        foreach (var prize in this.prizes)             for (var i = 0; i < prize.Count; i++) {
+        foreach (var prize in this.prizes) {
+            for (var i = 0; i < prize.Count; i++) {
                 var serialNumber = ticketData.GenerateUniqueSerialNumber(this.SerialNumberLength, this.SerialNumberCharacters, this.SerialNumberPrefix);
                 var fields = new Collection<FieldInfo>();
 
-                for (var j = 0; j < this.FieldsToWin; j++)                     fields.Add(new(RandomNumberGenerator.GetInt32(int.MaxValue), prize.Name));
+                for (var j = 0; j < this.FieldsToWin; j++) fields.Add(new(RandomNumberGenerator.GetInt32(int.MaxValue), prize.Name));
 
                 var fieldStrings = this.CompleteFields(fields, prize.Name).ToArray();
                 ticketData.Tickets.Add(new(serialNumber, prize.Name, fieldStrings));
 
                 Console.Write('.');
             }
+        }
         Console.WriteLine("OK");
 
         // Generate non-winning ticket data
