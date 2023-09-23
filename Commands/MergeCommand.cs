@@ -21,7 +21,7 @@ internal class MergeCommand {
     [Required, Range(1, 100)]
     public int Columns { get; set; }
 
-    [Argument(3, "rows", "How many images is to be merged horizontally.")]
+    [Argument(3, "rows", "How many images is to be merged vertically.")]
     [Required, Range(1, 100)]
     public int Rows { get; set; }
 
