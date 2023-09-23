@@ -4,7 +4,9 @@ Fortuna is a simple software to create scratch lottery tickets. It can generate 
 
 Getting the scratch surface stickers is easy -- you can [get them for cheap on AliExpress](https://s.click.aliexpress.com/e/_DlWrFLH) in various sizes and designs. The trouble is generating randomized printing data.
 
-> This software is not intended to be used for real lottery tickets. It's just a fun project for prizes on parties or similar events. Check your local laws and regulations before organizing such thing.
+> **This software is not intended to be used for real lottery tickets.** 
+>
+> It's just a fun project for prizes on parties or similar events. Check your local laws and regulations before organizing such thing, there may be weird requirements for lotteries and even weirder definitions of what a lottery actually is.
 
 ## How to use
 
@@ -155,6 +157,8 @@ Argument | Value | Default
 
 After running this command, the output folder will contain a bunch of image files, named according to random serial number. You can print these images to obtain lottery tickets.
 
+> The `--dpi` option will not affect the pixel dimensions of the image itself. It will just add the DPI value to image metadata.
+
 ### Merge images to sheets (optional)
 
 If you are printing the image files on regular home or office printer, you'll probably like them to be organized in pages. So you can put together ie. four A6 tickets to form a single A4 page etd. There is the `fortuna merge` command for that.
@@ -170,3 +174,5 @@ Argument | Long name | Meaning | Default value
 `-cm` | `--cut-marks` | Draw cut marks on the page.
 `-cml <length>` | `--cut-mark-length <length>` | Length of the cut marks in mm. | `5`
 `--dpi <number>` | | Set the DPI resolution of the generated images. | `300`
+
+> The `--dpi` option will not affect the pixel dimensions of the image itself. It will just add the DPI value to image metadata.
